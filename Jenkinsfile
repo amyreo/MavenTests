@@ -10,7 +10,7 @@ pipeline {
         stage('Nettoyage') {
             steps {
                 // Get some code from a GitHub repository
-                git 'https://github.com/theolorenzi/MavenTests.git'
+                git 'https://github.com/formateur1/MavenTests.git'
 
                 // Run Maven on a Unix agent.
                 // sh "mvn -Dmaven.test.failure.ignore=true clean package"
@@ -35,12 +35,12 @@ pipeline {
             
             post {
             
-            	failure {
-            		echo "Echec"
-            		mail to: "theo.lorenzi@laposte.net",
-                	subject: "Echec pipeline : ${currentBuild.fullDisplayName}",
-                	body: "Erreur dans le build : ${env.BUILD_URL}"
-        	}
+		    failure {
+			    echo "Echec"
+			    mail to: "enseignant.formateur@protonmail.com",
+				subject: "Echec pipeline : ${currentBuild.fullDisplayName}",
+				body: "Erreur dans le build : ${env.BUILD_URL}"
+			}
             	
             }
         }
@@ -49,18 +49,17 @@ pipeline {
             steps {
                 bat "mvn install"
             }
+        }
     }
     
     post {
         always {
-            echo "Le build a bien été lancé"   
+            echo "Le build a bien été lancé depuis github"   
         }
         
         success {
             echo "Les tests ont bien été validé, on peut déployer en production"   
         }
-        
-        
+
     }
-}
 }
